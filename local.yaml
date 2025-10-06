@@ -1,0 +1,9 @@
+env: "local" 
+storage_dsn: "host=localhost port=5432 dbname=Noty user=postgres password=post connect_timeout=10 sslmode=disable"
+http_server: 
+  address: "localhost:8080"
+  timeout: 4s
+  idle_timeout: 60s 
+jwt_access_ttl: 120m
+jwt_refresh_ttl: 43200m
+signing_key: d895dea2fb49727e01732862a24941a2f00034fd34c8c1ac3e134f32ef5ebc13
