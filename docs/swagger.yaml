@@ -1,0 +1,70 @@
+basePath: /api/v1
+definitions:
+  httpCodes.Response:
+    properties:
+      error:
+        type: string
+      status:
+        type: string
+    type: object
+  models.Note:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+info:
+  contact:
+    name: '@llimd'
+  description: API для заметок.
+  title: Noty API
+  version: 1.0.0
+paths:
+  /notes:
+    get:
+      parameters:
+      - description: ограничение размера выдачи
+        in: query
+        maximum: 100
+        minimum: 1
+        name: limit
+        type: integer
+      - description: смещение
+        in: query
+        name: offset
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Note'
+            type: array
+        "400":
+          description: Какая то ошибка тумтум
+          schema:
+            $ref: '#/definitions/httpCodes.Response'
+      security:
+      - BearerAuth: []
+      summary: Список заметок пользователя
+      tags:
+      - notes
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    description: '"Bearer <access-token>"'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

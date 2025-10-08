@@ -15,12 +15,26 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	_ "Noty/docs"
 )
 
 const (
 	envLocal = "local"
 	envProd  = "prod"
 )
+
+// @title        Noty API
+// @version      1.0.0
+// @description  API для заметок.
+// @contact.name @llimd
+// @BasePath     /api/v1
+// @schemes      http https
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description "Bearer <access-token>"
 
 func main() {
 	cfg := config.MustLoad()

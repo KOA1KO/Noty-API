@@ -7,6 +7,8 @@ const (
 	DESC string = "DESC"
 )
 
+// Note представляет элемент выдачи.
+// swagger:model
 type Note struct {
 	ID        int       `json:"id"`
 	UserID    int       `json:"user_id"`

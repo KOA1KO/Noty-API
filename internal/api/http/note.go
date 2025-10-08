@@ -50,6 +50,14 @@ func (h *Handler) PostNewNote(w http.ResponseWriter, r *http.Request) {
 	httpCodes.WriteJSONResponse(w, http.StatusCreated, response)
 }
 
+// @Summary     Список заметок пользователя
+// @Tags        notes
+// @Security    BearerAuth
+// @Param       limit   query  int   false  "ограничение размера выдачи" minimum(1) maximum(100)
+// @Param       offset  query  int   false  "смещение"
+// @Success     200     {array}  models.Note
+// @Failure     400     {object} httpCodes.Response  "Какая то ошибка тумтум"
+// @Router      /notes [get]
 func (h *Handler) GetNotes(w http.ResponseWriter, r *http.Request) {
 	const op = "internal.handlers.note.GetNotes"
 

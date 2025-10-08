@@ -6,8 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/go-chi/chi/v5"
-	// _ "github.com/swaggo/http-swagger/example/go-chi/docs"
-	// httpSwagger "github.com/swaggo/http-swagger/v2"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type Handler struct {
@@ -32,24 +31,23 @@ func (h *Handler) GetRouter() chi.Router {
 
 	r.Use(h.MWLog())
 
-	// r.Get("/swagger/*", httpSwagger.Handler(
-	// 	httpSwagger.URL("http://localhost:8080/swagger/doc.json"), //The url pointing to API definition
-	// ))
+	r.Get("/docs/*", httpSwagger.Handler(
+		httpSwagger.URL("/swagger/doc.json"),
+	))
 
-	// r.Get("/docs/swagger.json", func(w http.ResponseWriter, r *http.Request) {
-	// 	http.ServeFile(w, r, "./docs/swagger.json")
-	// })
+	r.Route("/api/v1", func(r chi.Router) {
 
-	r.Post("/sign-in", h.PostSignUp)
-	r.Post("/login", h.PostLogin)
-	// r.Get("/refresh", h.GetRefresh)
+		r.Post("/sign-in", h.PostSignUp)
+		r.Post("/login", h.PostLogin)
+		// r.Get("/refresh", h.GetRefresh)
 
-	r.With(h.jwtAuthMiddleware).Group(func(r chi.Router) {
-		r.Post("/notes", h.PostNewNote)
-		r.With(h.GetMeta).Get("/notes", h.GetNotes)
-		r.Get("/notes/{note_id}", h.GetNoteByID)
-		r.Put("/notes/{note_id}", h.PutUpdateNote)
-		r.Delete("/notes/{note_id}", h.DeleteNote)
+		r.With(h.jwtAuthMiddleware).Group(func(r chi.Router) {
+			r.Post("/notes", h.PostNewNote)
+			r.With(h.GetMeta).Get("/notes", h.GetNotes)
+			r.Get("/notes/{note_id}", h.GetNoteByID)
+			r.Put("/notes/{note_id}", h.PutUpdateNote)
+			r.Delete("/notes/{note_id}", h.DeleteNote)
+		})
 	})
 
 	return r
